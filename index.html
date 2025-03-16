@@ -1,1 +1,48 @@
-a
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 10px;
+        }
+        #result {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather App</h1>
+    <input type="text" id="location" placeholder="Enter location">
+    <button onclick="getWeather()">Get Weather</button>
+    <div id="result"></div>
+
+    <script>
+        function getWeather() {
+            let location = document.getElementById('location').value;
+            let apiKey = '6da8cf7027a14ad2a2b114339251603';
+            let url = `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    let temp = data.current.temp_c;
+                    document.getElementById('result').innerHTML = `Temperature in ${location}: ${temp}°C`;
+                })
+                .catch(error => {
+                    document.getElementById('result').innerHTML = "Error fetching data. Please try again.";
+                    console.error('Error:', error);
+                });
+        }
+    </script>
+</body>
+</html>
